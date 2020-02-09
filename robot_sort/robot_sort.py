@@ -3,11 +3,11 @@ class SortingRobot:
         """
         SortingRobot takes a list and sorts it.
         """
-        self._list = l          # The list the robot is tasked with sorting
-        self._item = None       # The item the robot is holding
-        self._position = 0      # The list position the robot is at
-        self._light = "OFF"     # The state of the robot's light
-        self._time = 0          # A time counter (stretch)
+        self._list = l  # The list the robot is tasked with sorting
+        self._item = None  # The item the robot is holding
+        self._position = 0  # The list position the robot is at
+        self._light = "OFF"  # The state of the robot's light
+        self._time = 0  # A time counter (stretch)
 
     def can_move_right(self):
         """
@@ -57,7 +57,8 @@ class SortingRobot:
         """
         self._time += 1
         # Swap the held item with the list item at the robot's position
-        self._item, self._list[self._position] = self._list[self._position], self._item
+        self._item, self._list[self._position] = self._list[
+            self._position], self._item
 
     def compare_item(self):
         """
@@ -81,58 +82,57 @@ class SortingRobot:
         Turn on the robot's light
         """
         self._light = "ON"
+
     def set_light_off(self):
         """
         Turn off the robot's light
         """
         self._light = "OFF"
+
     def light_is_on(self):
         """
         Returns True if the robot's light is on and False otherwise.
         """
         return self._light == "ON"
 
+    # Student-defined methods
+
+    def move_right_to_none(self):
+        while self.compare_item() != None:
+            self.move_right()
+
     def sort(self):
         """
         Sort the robot's list.
         """
-        # Fill this out
-        print(self._list, self._light, 'stuck1')
-        self.swap_item()
-        for _ in range(3):
-            while self.light_is_on() == False:
-                if self.can_move_right() == True:
-                    self.move_right()
-                else:
-                    self.swap_item()
-                    while self.can_move_left() == True:
-                        self.move_left()
-                    self.swap_item()
-                
-                if self.compare_item() == 1:
-                    self.swap_item()
-                    self.set_light_on()
-                elif self.compare_item() == -1:
-                    pass
-
-                print(self._list, self._light, 'stuck2')
-
-            while self.light_is_on() == True:
+        # Implementation: Basically Insertion Sort
+        # Keep running as long as robot can move right
+        while self.can_move_right():
+            self.move_right()
+            self.swap_item()
+            # Check if insert to left
+            while self.can_move_left() == True:
                 self.move_left()
-                if self.compare_item() == None:
-                    self.swap_item()
-                    self.set_light_off()
+                # If it sees a smaller element, moves RIGHT and swaps
+                if self.compare_item() == 1:
                     self.move_right()
                     self.swap_item()
-
-                print(self._list, self._light, 'stuck3')
+                    break
+                # If hits end, that means we're holding the smallest element seen so far
+                elif self.can_move_left() == False:
+                    self.swap_item()
+                    break
+            # Push everything to the right
+            while self.compare_item() != None:
+                self.move_right()
+                self.swap_item()
 
 
 if __name__ == "__main__":
     # Test our your implementation from the command line
     # with `python robot_sort.py`
 
-    l = [5,4,3]
+    l = [5, 2, 3, 1, 7, -10, 4]
 
     robot = SortingRobot(l)
 
