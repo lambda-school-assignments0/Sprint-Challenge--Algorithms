@@ -95,12 +95,6 @@ class SortingRobot:
         """
         return self._light == "ON"
 
-    # Student-defined methods
-
-    def move_right_to_none(self):
-        while self.compare_item() != None:
-            self.move_right()
-
     def sort(self):
         """
         Sort the robot's list.
