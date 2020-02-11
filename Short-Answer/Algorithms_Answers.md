@@ -13,8 +13,8 @@ while (a < n):
     a = a + 1
 ```
 
-b) O(n^2)
-O(n^2) because the outer loop runs `n` times and the inner loop will run `n/2` times : O(n(n/2)) -> O(n^2).
+b) O(n*log(n))
+O(n*log(n)) because the outer loop runs `n` times and the inner loop has a runtime complexity of log(n) : O(n(log(n)) -> O(n*log(n)).
 
 c) O(n)
 O(n) because it'll run `bunnies` number of times recursively.
